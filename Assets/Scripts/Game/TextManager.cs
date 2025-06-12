@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -12,7 +13,9 @@ public class TextManager : MonoBehaviour
     {
         PlayerPrefs.SetString("STRING_SET", "마른 하늘에 날벼락이|내리쳤다.|유감");
         SplitTexts();
+        TextPrefebMake();
     }
+
     void SplitTexts()
     {
         string cur_string_set = PlayerPrefs.GetString("STRING_SET");
@@ -24,5 +27,11 @@ public class TextManager : MonoBehaviour
             else if (cur_string_set[i] != '|') line += cur_string_set[i];
             else { texts.Add(line); line = ""; }
         }
+    }
+
+    void TextPrefebMake()
+    {
+        GameObject maintext = Instantiate(mainTextPrefab);
+        maintext.transform.Translate(new Vector2(0,0));
     }
 }
