@@ -29,4 +29,13 @@ public class ButtonHover : MonoBehaviour
         if (prev_color != null) image.color = prev_color;
         if (prev_text_size != 0) cur_text.fontSize = prev_text_size;
     }
+
+    public void GameStartSolo()
+    {
+        LoginManager.Instance.RequestRandomSentence();
+    }
+    public void FindStage()
+    {
+        GameStreamST.Instance.SetCurrentScene("find");
+    }
 }
