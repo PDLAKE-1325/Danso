@@ -3,6 +3,22 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+
+[System.Serializable]
+public class WordsData
+{
+    public int id;
+    public string name;
+    public string author;
+    public string origin_author;
+}
+
+[System.Serializable]
+public class FoundWordsList
+{
+    public WordsData[] items;
+}
+
 [System.Serializable]
 public class LeaderboardEntry
 {
@@ -47,6 +63,7 @@ public class MainData : MonoBehaviour
     [SerializeField] GameObject rank_dot;
 
     [Header("Find")]
+    [SerializeField] Text finder_input;
     [SerializeField] Text found_title;
     [SerializeField] Text found_author;
     [SerializeField] Text found_origin_author;
@@ -93,6 +110,11 @@ public class MainData : MonoBehaviour
 
                 title_.text = data.name;
                 origin_author.text = data.original_author;
+
+                foreach (Transform item in rankingListParent)
+                {
+                    Destroy(item.gameObject);
+                }
 
                 for (int i = 0; i < data.leaderboard.Length; i++)
                 {
@@ -143,19 +165,85 @@ public class MainData : MonoBehaviour
         texts.score.text = $"{_score}점";
     }
 
+    void ClearFoundTransform()
+    {
+        foreach (Transform item in found_words_parent)
+        {
+            Destroy(item.gameObject);
+        }
+    }
+
+    string[] filter_s = { "", "a", "b", "c", "d", "e" };
+
     public void FindWordsByTitle()
     {
-
+        if (string.IsNullOrEmpty(LoginManager.Instance.loginCode))
+        {
+            print("로그인 코드가 없습니다.");
+            return;
+        }
+        ClearFoundTransform();
     }
 
     public void FindWordsByAuthor()
     {
-
+        if (string.IsNullOrEmpty(LoginManager.Instance.loginCode))
+        {
+            print("로그인 코드가 없습니다.");
+            return;
+        }
+        ClearFoundTransform();
     }
 
+    public void FindByFilter()
+    {
+        if (string.IsNullOrEmpty(LoginManager.Instance.loginCode))
+        {
+            print("로그인 코드가 없습니다.");
+            return;
+        }
+        ClearFoundTransform();
+    }
 
+    IEnumerator GetWordsByTitle()
+    {
+        string url = $"https://danso-api.thnos.app/sentences/search?keyword={finder_input.text}";
 
+        UnityWebRequest request = UnityWebRequest.Get(url);
+        request.SetRequestHeader("X-Login-Code", LoginManager.Instance.loginCode);
 
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            print("에러: " + request.error);
+        }
+        else
+        {
+            string json = request.downloadHandler.text;
+            string wrappedJson = "{\"items\":" + json + "}"; // 배열 감싸기
+
+            try
+            {
+                FoundWordsList data = JsonUtility.FromJson<FoundWordsList>(wrappedJson);
+
+                if (data.items.Length > 0)
+                {
+                    Debug.Log("첫 문장 ID: " + data.items[0].id);
+                }
+                else
+                {
+                    print("응답 배열이 비어 있음.");
+                }
+            }
+            catch (System.Exception e)
+            {
+                print("파싱 실패: " + e.Message);
+            }
+
+            Debug.Log("받은 원본 JSON: " + json);
+        }
+    }
 
 
     #region Extra
