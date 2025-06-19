@@ -4195,9 +4195,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1892371709}
-        m_TargetAssemblyTypeName: GameStreamST, Assembly-CSharp
-        m_MethodName: GameStart
+      - m_Target: {fileID: 1326363515}
+        m_TargetAssemblyTypeName: MainData, Assembly-CSharp
+        m_MethodName: RealStart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

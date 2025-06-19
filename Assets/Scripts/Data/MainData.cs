@@ -76,7 +76,10 @@ public class MainData : MonoBehaviour
     {
         RequestSoloInfo();
     }
-
+    public void RealStart()
+    {
+        GameStreamST.Instance.GameStart();
+    }
     void RequestSoloInfo()
     {
         if (string.IsNullOrEmpty(LoginManager.Instance.loginCode))
