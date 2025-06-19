@@ -36,6 +36,6 @@ public class ButtonHover : MonoBehaviour
     }
     public void FindStage()
     {
-        LoginManager.Instance.RequestFindStages();
+        GameStreamST.Instance.SetCurrentScene("find");
     }
 }

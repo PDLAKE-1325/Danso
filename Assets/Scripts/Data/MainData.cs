@@ -36,12 +36,24 @@ public class MainData : MonoBehaviour
     public GameObject[] allUIs;
     public GameObject HomeUIs;
     public GameObject SoloUIs;
+    public GameObject FindUIs;
 
+
+    [Header("Solo")]
     [SerializeField] Text title_;
     [SerializeField] Text origin_author;
     [SerializeField] Transform rankingListParent;
     [SerializeField] GameObject rank_prefab;
     [SerializeField] GameObject rank_dot;
+
+    [Header("Find")]
+    [SerializeField] Text found_title;
+    [SerializeField] Text found_author;
+    [SerializeField] Text found_origin_author;
+    [SerializeField] Transform found_words_parent;
+    [SerializeField] GameObject found_words_prefab;
+    [SerializeField] GameObject rightBox_obj;
+
 
     public void SetSoloInfos()
     {
@@ -84,7 +96,7 @@ public class MainData : MonoBehaviour
 
                 for (int i = 0; i < data.leaderboard.Length; i++)
                 {
-                    CreateRankBlock(i, data.leaderboard[i].player, data.leaderboard[i].score);
+                    CreateRankBlock(i + 1, data.leaderboard[i].player, data.leaderboard[i].score);
                 }
                 for (int i = 0; i < 3; i++)
                 {
@@ -122,12 +134,20 @@ public class MainData : MonoBehaviour
             image.color = myRankBlockColor;
         }
         string rank;
-        if (_rank == 0) rank = "1st.";
-        else if (_rank == 1) rank = "2nd.";
-        else if (_rank == 2) rank = "3rd.";
-        else rank = $"{_rank + 1}th.";
+        if (_rank == 1) rank = "1st.";
+        else if (_rank == 2) rank = "2nd.";
+        else if (_rank == 3) rank = "3rd.";
+        else rank = $"{_rank}th.";
         texts.rank.text = rank;
         texts.user.text = _name;
         texts.score.text = $"{_score}점";
     }
+
+
+    #region Extra
+    public void HomeBack()
+    {
+        GameStreamST.Instance.SetCurrentScene("home");
+    }
+    #endregion
 }

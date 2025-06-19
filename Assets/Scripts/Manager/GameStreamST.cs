@@ -26,6 +26,10 @@ public class GameStreamST : MonoBehaviour
         {
             menuDatas.SetSoloInfos();
         }
+        else if (scene == "find")
+        {
+            // menuDatas.SetFindInfos();
+        }
         cur_scene = scene;
     }
     #endregion
@@ -58,12 +62,22 @@ public class GameStreamST : MonoBehaviour
             else item.SetActive(true);
         }
     }
+    void FindStageUI()
+    {
+        foreach (GameObject item in menuDatas.allUIs)
+        {
+            if (item != menuDatas.FindUIs) item.SetActive(false);
+            else item.SetActive(true);
+        }
+    }
+
     void ChangeUIs()
     {
         try
         {
             if (cur_scene == "home") HomeUI();
             else if (cur_scene == "solo") SoloUI();
+            else if (cur_scene == "find") FindStageUI();
         }
         catch
         {
