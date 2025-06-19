@@ -143,6 +143,20 @@ public class MainData : MonoBehaviour
         texts.score.text = $"{_score}점";
     }
 
+    public void FindWordsByTitle()
+    {
+
+    }
+
+    public void FindWordsByAuthor()
+    {
+
+    }
+
+
+
+
+
 
     #region Extra
     public void HomeBack()
