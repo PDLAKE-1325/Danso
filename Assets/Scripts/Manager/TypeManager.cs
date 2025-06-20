@@ -118,8 +118,10 @@ public class TypeManager : MonoBehaviour
             end = true;
             GameEnd();
         }
-        if (inputField.text != "")
-            inputField.text = "";
+        if (!string.IsNullOrEmpty(inputField.text))
+        {
+            displayText.text = inputField.text;
+        }
         cur_y = 250 * cur_pos;
         if (cur_pos >= textGenerater.texts.Count || end)
             return;
