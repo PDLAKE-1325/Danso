@@ -110,41 +110,25 @@ public class TypeManager : MonoBehaviour
     void Update()
     {
         SetInfos();
-        print(1);
+
         if (!gameStarted) return;
+
         if ((incorrect >= 5 || cur_pos >= textGenerater.texts.Count) && !end)
         {
-            print(2);
             end = true;
             GameEnd();
-        }
-        if (!string.IsNullOrEmpty(inputField.text))
-        {
-            displayText.text = inputField.text;
-        }
-        cur_y = 250 * cur_pos;
-        if (cur_pos >= textGenerater.texts.Count || end)
             return;
-        if (!inputField.isFocused) inputField.ActivateInputField();
-
-        print(3);
-        // 완성된 문자 추가 처리
-        foreach (char c in Input.inputString)
-        {
-            if (c == '\b' || c == '\r' || c == '\n')
-            {
-                // 백스페이스, 캐리지리턴, 줄바꿈 무시
-                continue;
-            }
-
-            // 목표 길이보다 짧을 때만 추가
-            if (inputText.Length < textGenerater.texts[cur_pos].Length)
-            {
-                inputText += c;
-            }
         }
 
-        // 조합 중인 문자열 가져오기
+        string prevText = inputText;
+        inputText = inputField.text;
+
+        if (inputText.Length < prevText.Length)
+        {
+            inputText = prevText;
+            inputField.text = prevText;
+        }
+
         composition = Input.compositionString;
 
         if (inputText.Length == textGenerater.texts[cur_pos].Length)
@@ -154,7 +138,6 @@ public class TypeManager : MonoBehaviour
 
         if (!string.IsNullOrEmpty(composition))
         {
-            // 조합 중일 때 조합 문자 함께 표시
             displayText.text = inputText + composition;
         }
         else
@@ -162,13 +145,32 @@ public class TypeManager : MonoBehaviour
             displayText.text = inputText;
         }
 
+        if (!inputField.isFocused)
+            inputField.ActivateInputField();
+
+        cur_y = 250 * cur_pos;
+
+        if (cur_pos >= textGenerater.texts.Count || end) return;
+
+        int answerLength = textGenerater.texts[cur_pos].Length;
+        if (inputText.Length > answerLength)
+        {
+            inputText = inputText.Substring(0, answerLength);
+            inputField.text = inputText;
+        }
+
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            if (inputText.Length == textGenerater.texts[cur_pos].Length)
+            if (inputText.Length == answerLength)
             {
                 EndLine();
+                inputField.text = "";
+                inputText = "";
             }
         }
     }
 
 }
+
+
+
