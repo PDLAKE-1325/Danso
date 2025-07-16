@@ -41,6 +41,7 @@ public class LoginManager : MonoBehaviour
     public int cur_words_id;
     public string cur_words_name;
     public string cur_words_auther;
+    public bool login_auth;
 
 
     bool name_request_sent;
@@ -71,6 +72,24 @@ public class LoginManager : MonoBehaviour
         {
             print("로그인 코드가 비어 있습니다.");
             return;
+        }
+        StartCoroutine(CheckUserCode());
+    }
+    IEnumerator CheckUserCode()
+    {
+        string url = "https://danso-api.thnos.app/user/me";
+        UnityWebRequest request = UnityWebRequest.Get(url);
+        request.SetRequestHeader("X-Login-Code", loginCode);
+
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            print("요청 실패: " + request.error);
+        }
+        else
+        {
+            login_auth = true;
         }
     }
 

@@ -1,9 +1,40 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
+using System.Runtime.InteropServices;
 using UnityEngine.UI;
+
+public static class IMEHelper
+{
+    const int GCS_COMPSTR = 0x0008;
+
+    [DllImport("imm32.dll")]
+    private static extern IntPtr ImmGetContext(IntPtr hWnd);
+
+    [DllImport("imm32.dll")]
+    private static extern bool ImmGetOpenStatus(IntPtr hIMC);
+
+    [DllImport("imm32.dll")]
+    private static extern bool ImmReleaseContext(IntPtr hWnd, IntPtr hIMC);
+
+    [DllImport("user32.dll")]
+    private static extern IntPtr GetForegroundWindow();
+
+    public static bool IsIMEOpen()
+    {
+        IntPtr hwnd = GetForegroundWindow();
+        IntPtr hIMC = ImmGetContext(hwnd);
+        if (hIMC == IntPtr.Zero) return false;
+
+        bool isOpen = ImmGetOpenStatus(hIMC);
+        ImmReleaseContext(hwnd, hIMC);
+
+        return isOpen;
+    }
+}
 
 [System.Serializable]
 public class SentenceWords
@@ -20,6 +51,7 @@ public class TextGenerater : MonoBehaviour
     [SerializeField] GameObject mainTextPrefab;
     [SerializeField] Transform text_parent;
     [SerializeField] float text_move_speed;
+    [SerializeField] Text input_type_text;
 
     void Start()
     {

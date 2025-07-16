@@ -38,4 +38,12 @@ public class ButtonHover : MonoBehaviour
     {
         GameStreamST.Instance.SetCurrentScene("find");
     }
+    public void AddWordSet()
+    {
+        Application.OpenURL($"https://danso-api.thnos.app/dashboard/sentence?login={LoginManager.Instance.loginCode}");
+    }
+    public void ChangeName()
+    {
+        Application.OpenURL($"https://danso-api.thnos.app/dashboard/profile/edit?login={LoginManager.Instance.loginCode}");
+    }
 }

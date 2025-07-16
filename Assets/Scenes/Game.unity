@@ -236,7 +236,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 200}
+  m_SizeDelta: {x: 0, y: 153.4}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &60411386
 MonoBehaviour:
@@ -1303,6 +1303,7 @@ MonoBehaviour:
   mainTextPrefab: {fileID: 3661696786304065733, guid: 8f7a16d42952f47bcb716e8b0268fd41, type: 3}
   text_parent: {fileID: 919979539}
   text_move_speed: 10
+  input_type_text: {fileID: 0}
 --- !u!4 &1331285229
 Transform:
   m_ObjectHideFlags: 0
@@ -1628,7 +1629,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 100}
+  m_AnchoredPosition: {x: 0, y: 70}
   m_SizeDelta: {x: 1800, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1556534714

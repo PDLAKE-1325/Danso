@@ -4,9 +4,11 @@ using UnityEngine.UI;
 public class FilterText : MonoBehaviour
 {
     Text my_text;
+    [SerializeField] MainData mainData;
     public void UpdateFilter(int a)
     {
         FindST.Instance.UpadteFilter(a);
+        mainData.SetWordSets();
     }
     void Start()
     {
