@@ -311,7 +311,7 @@ public class MainData : MonoBehaviour
         string url = $"https://danso-api.thnos.app/sentences/{cur_found_id}/interact-like";
 
         WWWForm form = new WWWForm();
-        // form.AddField();
+        form.AddField("", "");
 
         UnityWebRequest request = UnityWebRequest.Post(url, form);
         request.SetRequestHeader("X-Login-Code", LoginManager.Instance.loginCode);
