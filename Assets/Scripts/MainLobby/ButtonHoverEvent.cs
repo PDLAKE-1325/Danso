@@ -44,6 +44,6 @@ public class ButtonHover : MonoBehaviour
     }
     public void ChangeName()
     {
-        Application.OpenURL($"https://danso-api.thnos.app/dashboard/profile/edit?login={LoginManager.Instance.loginCode}");
+        Application.OpenURL($"https://danso-api.thnos.app/profile/edit?login={LoginManager.Instance.loginCode}");
     }
 }
