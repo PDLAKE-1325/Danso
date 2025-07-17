@@ -180,6 +180,7 @@ public class MainData : MonoBehaviour
 
     string[] filter_s = { "", "E", "D", "C", "B", "A" };
 
+    FoundWordsList curFounds;
     public void FindWordsByTitle()
     {
         if (string.IsNullOrEmpty(LoginManager.Instance.loginCode))
@@ -187,6 +188,7 @@ public class MainData : MonoBehaviour
             print("로그인 코드가 없습니다.");
             return;
         }
+        curFounds = new();
         ClearFoundTransform();
         StartCoroutine(GetWordsByTitleOrAuther(true));
     }
@@ -198,11 +200,11 @@ public class MainData : MonoBehaviour
             print("로그인 코드가 없습니다.");
             return;
         }
+        curFounds = new();
         ClearFoundTransform();
         StartCoroutine(GetWordsByTitleOrAuther(false));
     }
 
-    FoundWordsList curFounds;
 
     IEnumerator GetWordsByTitleOrAuther(bool isTitle)
     {
