@@ -353,6 +353,7 @@ public class MainData : MonoBehaviour
                 SoloSentenceData data = JsonUtility.FromJson<SoloSentenceData>(json);
 
                 // foundWordsInfo_script
+                StartCoroutine(LoadImageFromUrl(data.image_url));
                 cur_found_id = id;
                 foundWordsInfo_script.title.text = data.name;
                 foundWordsInfo_script.author.text = $"제작자 : {data.author}";
@@ -393,6 +394,34 @@ public class MainData : MonoBehaviour
             {
                 Debug.LogError("파싱 오류: " + e.Message);
             }
+        }
+    }
+    IEnumerator LoadImageFromUrl(string url)
+    {
+        UnityWebRequest request = UnityWebRequestTexture.GetTexture("https://danso-image-cdn.serltretu24.workers.dev/?url=" + url);
+        request.SetRequestHeader("Accept-Encoding", "gzip");
+        yield return request.SendWebRequest();
+
+#if UNITY_2020_1_OR_NEWER
+        if (request.result != UnityWebRequest.Result.Success)
+#else
+        if (request.isNetworkError || request.isHttpError)
+#endif
+        {
+            Debug.LogError("이미지 로딩 실패: " + request.error);
+            foundWordsInfo_script.img.sprite = null;
+        }
+        else
+        {
+            Texture2D texture = DownloadHandlerTexture.GetContent(request);
+            // Texture2D -> Sprite 변환
+            Sprite sprite = Sprite.Create(
+                texture,
+                new Rect(0, 0, texture.width, texture.height),
+                new Vector2(0.5f, 0.5f)
+            );
+
+            foundWordsInfo_script.img.sprite = sprite;
         }
     }
 
