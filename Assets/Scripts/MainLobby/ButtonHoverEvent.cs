@@ -40,7 +40,7 @@ public class ButtonHover : MonoBehaviour
     }
     public void AddWordSet()
     {
-        Application.OpenURL($"https://danso-api.thnos.app/dashboard/sentence?login={LoginManager.Instance.loginCode}");
+        Application.OpenURL($"https://danso-api.thnos.app/dashboard/?login_code={LoginManager.Instance.loginCode}");
     }
     public void ChangeName()
     {
